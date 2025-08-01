@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-List</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./assets/css/bootsrap.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+    <section>
+        <div class="container">
+            <h1 class="text-center text-white my-5">📝 To Do list 📝</h1>
+            <div class="box d-lg-flex gap-4 my-5 text-center">
+                <input type="text" id="task" class="form-control" placeholder="Enter Your Task Here">
+                <select name="priority" id="priority" class="form-select my-lg-0 my-4">
+                    <option value="">Please Enter Priority</option>
+                    <option value="1">⬆️ High</option>
+                    <option value="2">🟰 Medium</option>
+                    <option value="3">⬇️ Low</option>
+                </select>
+                <button type="button" id="add-btn" class="btn btn-light " style="width: 100px;">ADD</button>
+            </div>
+            <div>
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr class="text-white text-center">
+                            <th>Task</th>
+                            <th>Priority</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ans">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script src="./assets/js/jquery.js"></script>
+    <script>
+        function getPriorityText(priority) {
+            switch (priority) {
+                case "1":
+                    return `<span class="text-danger">High</span>`;
+                case "2":
+                    return `<span class="text-success">Medium</span>`;
+                case "3":
+                    return `<span class="text-warning">Low</span>`;
+            }
+        }
+
+        function showTasks() {
+            document.getElementById("ans").innerHTML = "";
+
+            toDo.forEach(data => {
+                document.getElementById("ans").innerHTML += `
+                    <tr class="text-white text-center">
+                        <td class="align-middle">${data.task}</td>
+                        <td class="align-middle">${getPriorityText(data.priority)}</td>
+                        <td class="align-middle"><button class="btn btn-danger btn-sm">Delete</button></td>
+                    </tr>
+                `;
+            })
+        }
+
+        let toDo = [
+
+        ];
+
+        $("#add-btn").on("click", function () {
+            let task = document.getElementById("task").value;
+            let priority = document.getElementById("priority").value;
+
+            if (task.trim() === "" && priority.trim() === "") {
+                alert("Please Enter Task");
+                return;
+            }
+
+            if (task && priority) {
+                let newTask = {
+                    task: task,
+                    priority: priority,
+                }
+
+                toDo.push(newTask);
+
+                showTasks();
+            } else {
+                alert("Please Fill The Field....");
+            }
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>
