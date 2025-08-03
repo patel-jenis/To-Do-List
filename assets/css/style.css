@@ -34,3 +34,9 @@ input, select, button {
 table {
     font-size: 19px;
 }          
+
+.trash {
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+}

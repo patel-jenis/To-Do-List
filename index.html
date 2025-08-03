@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do-List</title>
 
+    <!-- Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./assets/css/bootsrap.css">
     <!-- Style CSS -->
@@ -25,9 +27,9 @@
                     <option value="2">🟰 Medium</option>
                     <option value="3">⬇️ Low</option>
                 </select>
-                <button type="button" id="add-btn" class="btn btn-light " style="width: 100px;">ADD</button>
+                <button type="button" id="add-btn" class="btn btn-light">ADD</button>
             </div>
-            <div>
+            <div class="mb-5">
                 <table class="table table-dark table-striped">
                     <thead>
                         <tr class="text-white text-center">
@@ -59,46 +61,54 @@
         function showTasks() {
             document.getElementById("ans").innerHTML = "";
 
-            toDo.forEach(data => {
+            toDo.forEach((data, index) => {
                 document.getElementById("ans").innerHTML += `
                     <tr class="text-white text-center">
                         <td class="align-middle">${data.task}</td>
                         <td class="align-middle">${getPriorityText(data.priority)}</td>
-                        <td class="align-middle"><button class="btn btn-danger btn-sm">Delete</button></td>
-                    </tr>
+                        <td class="align-middle"><button" onclick="deleteTask(${index})"><i class="ri-delete-bin-line trash"></i></button></td>
+                    </tr>   
                 `;
             })
+        }
+
+        function deleteTask(index) {
+            toDo.splice(index, 1);
+            showTasks();
         }
 
         let toDo = [
 
         ];
 
-        $("#add-btn").on("click", function () {
-            let task = document.getElementById("task").value;
-            let priority = document.getElementById("priority").value;
+        $(document).ready(function () {
+            $("#add-btn").on("click", function () {
+                let task = document.getElementById("task").value;
+                let priority = document.getElementById("priority").value;
 
-            if (task.trim() === "" && priority.trim() === "") {
-                alert("Please Enter Task");
-                return;
-            }
-
-            if (task && priority) {
-                let newTask = {
-                    task: task,
-                    priority: priority,
+                if (task.trim() === "" && priority.trim() === "") {
+                    alert("Please Enter Task and Priority");
+                    return;
                 }
 
-                toDo.push(newTask);
+                if (task && priority) {
+                    let newTask = {
+                        task: task,
+                        priority: priority,
+                    }
 
-                showTasks();
-            } else {
-                alert("Please Fill The Field....");
-            }
+                    toDo.push(newTask);
 
+                    showTasks();
+
+                    document.getElementById("task").value = "";
+                    document.getElementById("priority").value = "";
+
+                } else {
+                    alert("Please Enter Task and Priority");
+                }
+            })
         })
-
-
 
     </script>
 </body>
