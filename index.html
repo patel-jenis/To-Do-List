@@ -46,6 +46,8 @@
     </section>
 
     <script src="./assets/js/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         function getPriorityText(priority) {
             switch (priority) {
@@ -77,17 +79,18 @@
             showTasks();
         }
 
-        let toDo = [
-
-        ];
+        let toDo = [];
 
         $(document).ready(function () {
             $("#add-btn").on("click", function () {
                 let task = document.getElementById("task").value;
                 let priority = document.getElementById("priority").value;
 
-                if (task.trim() === "" && priority.trim() === "") {
-                    alert("Please Enter Task and Priority");
+                if (task.trim() === "" || priority.trim() === "") {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Please Enter Task and Priority",
+                    });
                     return;
                 }
 
@@ -105,7 +108,10 @@
                     document.getElementById("priority").value = "";
 
                 } else {
-                    alert("Please Enter Task and Priority");
+                    Swal.fire({
+                        icon: "error",
+                        title: "Please Enter Task and Priority",
+                    });
                 }
             })
         })
